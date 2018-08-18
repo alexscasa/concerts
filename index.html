@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Concert Viewer </title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Oswald" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="jumbotron">
+  <div class="container text-center">
+   <div class="row">
+    <div class="col-md-3">
+     <h2 class="title">Concert Viewer</h2>
+    </div>
+    <div class="col-md-6 content">
+     <h3>Select Venues Below To View Concerts</h3>
+     <form id="venues" onsubmit="getConcerts">
+       <input type="checkbox" name="venue" value="930">9:30 Club<br />
+	   <input type="checkbox" name="venue" value="8x10">The 8x10<br /><br />
+	   <input type="button" id="submit_venues" value="Submit">
+     </form>
+    </div>
+  </div>
+  </div>
+  </div>
+  <br />
+  <div id="concerts" class="container text-center">
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js"></script>
+  <script type="text/javascript">
+    // on document ready
+    $(document).ready(function(){
+      // on form submit
+       $('#submit_venues').click(function(){
+         // collect checked venues
+          var selected_venues = $('#venues [type="checkbox"]:checked').map(function(){
+              return this.value;
+          }).get();
+
+          selected_venues = JSON.stringify(selected_venues);
+          // AJAX call submitted selected venues JSON to getConcerts script
+          $.ajax({
+              type: "get",
+              url: "getConcerts.php",
+              data: {data: selected_venues},
+              // on success, fill div #concerts with response
+              // match each panel in row with the tallest panel in that row
+              success: function(data, status){
+                  if(data){
+                      $('#concerts').html(data);
+                      $('.concert').matchHeight();
+                  }
+              }
+          })
+       });
+    });	
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.concert-col{
+    /*height: 20em;*/
+}
+
+.title{
+    font-family: 'Indie Flower', cursive;
+    font-weight: bold;
+    font-size: 5em;
+}
+
+.content{
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5em;
+}
+
+.concert-title{
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.5em;
+}
