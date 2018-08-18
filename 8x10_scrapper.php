@@ -15,7 +15,7 @@
 		echo curl_error($ch);
 	}
 	curl_close($ch);
-	$data = iconv(mb_detect_encoding($data, mb_detect_order(), true), "UTF-8", $data);
+	$data = htmlspecialchars_decode($data);
 	$dom->loadHTML($data);
 	$dom->validateOnParse = true;
 	libxml_use_internal_errors(false);
